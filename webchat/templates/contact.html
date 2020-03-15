@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户联系人</title>
+</head>
+<body>
+    <div>
+        <p><input id="user_id" type="text" placeholder="发送的用户"/></p>
+        <p><input id="user_msg" placeholder="发送的消息"/></p>
+        <input id="sendmsg" type="button" value="提交">
+    </div>
+    <ul>
+        {% for row in data.MemberList%}
+        <li>{{row.NickName}}_{{row.UserName}}_{{row.Province}}</li>
+        {%endfor%}
+    </ul>
+    <script src="/static/js/jquery.min.js"></script>
+    <script>
+        //页面加载完实现
+        $(function () {
+            //发送消息
+            sendmessage();
+            //获取消息
+            getmessage();
+        });
+        //发送消息
+        function sendmessage() {
+            $("#sendmsg").click(function () {
+                $.ajax({
+                    url:"/sendmessage/",
+                    type:"POST",
+                    data:{"user_id":$("#user_id").val(),"user_msg":$("#user_msg").val()},
+                    success:function () {
+                        
+                    }
+                })
+                
+            })
+        }
+        //接收消息
+        function getmessage() {
+            $.ajax({
+                url:"/getmessage/",
+                type:"POST",
+                success:function () {
+                    getmessage()
+                }
+            })
+
+        }
+
+
+
+    </script>
+
+
+</body>
+</html>
